@@ -1,16 +1,60 @@
+import * as readline from "readline";
+import { books, readers } from "./data/mockDB";
 import { LibrarySystemImpl } from "./system/LibrarySystemImpl";
-import { BookImpl } from "./models/BookImpl";
-import { ReaderImpl } from "./models/ReaderImpl";
 
-const library = new LibrarySystemImpl();
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
 
-const book1 = new BookImpl("Clean Code", "Robert Martin", 2008);
-const reader1 = new ReaderImpl("Іван Петренко", "Київ", "+380991112233");
+const system = new LibrarySystemImpl(books, readers);
 
-library.addBook(book1);
-library.registerReader(reader1);
+function menu() {
+  console.log(`
+1. Показати книги
+2. Показати читачів
+3. Видати книгу
+4. Повернути книгу
+0. Вийти
+`);
+  rl.question("Ваш вибір: ", answer => {
+    try {
+      switch (answer) {
+        case "1":
+          system.listBooks().forEach(b =>
+            console.log(`${b.getId()} | ${b.getTitle()} | ${b.isAvailable() ? "Доступна" : "Видана"}`)
+          );
+          break;
+        case "2":
+          system.listReaders().forEach(r =>
+            console.log(`${r.getId()} | ${r.getName()}`)
+          );
+          break;
+        case "3":
+          rl.question("ID книги: ", b =>
+            rl.question("ID читача: ", r => {
+              system.lendBook(+b, +r);
+              menu();
+            })
+          );
+          return;
+        case "4":
+          rl.question("ID книги: ", b =>
+            rl.question("ID читача: ", r => {
+              system.returnBook(+b, +r);
+              menu();
+            })
+          );
+          return;
+        case "0":
+          rl.close();
+          return;
+      }
+    } catch (e:any) {
+      console.error("❌", e.message);
+    }
+    menu();
+  });
+}
 
-library.lendBook("Clean Code", "Іван Петренко");
-library.returnBook("Clean Code", "Іван Петренко");
-
-console.log("Система працює коректно");
+menu();
