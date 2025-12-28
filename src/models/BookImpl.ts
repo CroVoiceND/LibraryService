@@ -2,29 +2,17 @@ import { Book } from "../interfaces/Book";
 
 export class BookImpl implements Book {
   constructor(
+    private id: number,
     private title: string,
     private author: string,
     private year: number,
     private available: boolean = true
   ) {}
 
-  getTitle(): string {
-    return this.title;
-  }
-
-  getAuthor(): string {
-    return this.author;
-  }
-
-  getYear(): number {
-    return this.year;
-  }
-
-  isAvailable(): boolean {
-    return this.available;
-  }
-
-  setAvailable(status: boolean): void {
-    this.available = status;
-  }
+  getId() { return this.id; }
+  getTitle() { return this.title; }
+  getAuthor() { return this.author; }
+  getYear() { return this.year; }
+  isAvailable() { return this.available; }
+  setAvailable(status: boolean) { this.available = status; }
 }
