@@ -1,0 +1,30 @@
+{
+  "name": "git_tl",
+  "version": "1.0.0",
+  "description": "System for managing library`s lists.",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CroVoiceND/LibraryService.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/CroVoiceND/LibraryService/issues"
+  },
+  "homepage": "https://github.com/CroVoiceND/LibraryService#readme",
+  "devDependencies": {
+    "@types/node": "^25.0.3",
+    "typescript": "^5.9.3",
+    "ts-node": "^10.9.1"
+  },
+  "dependencies": {
+    "readline": "^1.3.0"
+  }
+}
