@@ -5,32 +5,23 @@ export class ReaderImpl implements Reader {
   private borrowedBooks: Book[] = [];
 
   constructor(
+    private id: number,
     private name: string,
     private address: string,
     private contact: string
   ) {}
 
-  getName(): string {
-    return this.name;
-  }
+  getId() { return this.id; }
+  getName() { return this.name; }
+  getAddress() { return this.address; }
+  getContact() { return this.contact; }
+  getBorrowedBooks() { return this.borrowedBooks; }
 
-  getAddress(): string {
-    return this.address;
-  }
-
-  getContact(): string {
-    return this.contact;
-  }
-
-  getBorrowedBooks(): Book[] {
-    return this.borrowedBooks;
-  }
-
-  borrowBook(book: Book): void {
+  borrowBook(book: Book) {
     this.borrowedBooks.push(book);
   }
 
-  returnBook(book: Book): void {
-    this.borrowedBooks = this.borrowedBooks.filter(b => b !== book);
+  returnBook(bookId: number) {
+    this.borrowedBooks = this.borrowedBooks.filter(b => b.getId() !== bookId);
   }
 }
