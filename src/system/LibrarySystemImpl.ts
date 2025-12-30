@@ -5,23 +5,31 @@ import { Reader } from "../interfaces/Reader";
 export class LibrarySystemImpl implements LibrarySystem {
   constructor(private books: Book[], private readers: Reader[]) {}
 
+  // Required test data sets:
+  // 1) book.id = unique (e.g. 10), title ≠ "", author ≠ "" → book is successfully added
+  // 2) book.id = existing (e.g. 1) → error "Book already exists"
   addBook(book: Book) {
     if (this.books.find((b) => b.getId() === book.getId()))
       throw new Error(`Книга з ID ${book.getId()} вже існує`);
     this.books.push(book);
   }
 
+  // Required test data sets:
+  // 1) reader.name = "Ivan", reader.contact = "12345" → reader is successfully registered
+  // 2) reader.name = "", reader.contact = "12345" → error
+  // 3) reader.name = "Ivan", reader.contact = "" → error
   registerReader(reader: Reader) {
     if (!reader.getName() || !reader.getContact())
       throw new Error(`Ім'я та контакт читача обов'язкові`);
     this.readers.push(reader);
   }
 
-  // lendBook:
-  // - bookId існує
-  // - readerId існує
-  // - книга доступна
-  // - читач ще не брав книгу
+  // Required test data sets:
+  // 1) bookId = existing, readerId = existing, book.available = true → book is lent
+  // 2) bookId = non-existing → error "Book not found"
+  // 3) readerId = non-existing → error "Reader not found"
+  // 4) book.available = false → error "Book already lent"
+  // 5) reader.borrowedBooks contains bookId → error
   lendBook(bookId: number, readerId: number) {
     const book = this.books.find((b) => b.getId() === bookId);
     if (!book) throw new Error(`Книга з ID ${bookId} не знайдена`);
@@ -39,6 +47,9 @@ export class LibrarySystemImpl implements LibrarySystem {
     reader.borrowBook(book);
   }
 
+  // Required test data sets:
+  // 1) bookId ∈ reader.borrowedBooks → book is successfully returned
+  // 2) bookId ∉ reader.borrowedBooks → error
   returnBook(bookId: number, readerId: number) {
     const book = this.books.find((b) => b.getId() === bookId);
     if (!book) throw new Error(`Книга з ID ${bookId} не знайдена`);
