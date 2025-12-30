@@ -50,10 +50,10 @@ export class LibrarySystemImpl implements LibrarySystem {
     reader.returnBook(bookId);
   }
 
-  listBooks() {
+  listBooks(): Book[] {
     return this.books;
   }
-  listReaders() {
+  listReaders(): Reader[] {
     return this.readers;
   }
 }
