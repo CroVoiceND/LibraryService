@@ -17,6 +17,11 @@ export class LibrarySystemImpl implements LibrarySystem {
     this.readers.push(reader);
   }
 
+  // lendBook:
+  // - bookId існує
+  // - readerId існує
+  // - книга доступна
+  // - читач ще не брав книгу
   lendBook(bookId: number, readerId: number) {
     const book = this.books.find((b) => b.getId() === bookId);
     if (!book) throw new Error(`Книга з ID ${bookId} не знайдена`);
