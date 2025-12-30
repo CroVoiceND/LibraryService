@@ -30,24 +30,65 @@ function menu() {
             .listBooks()
             .forEach((b) =>
               console.log(
-                `${b.getId()} | ${b.getTitle()} | ${
+                `${b.getId()} | ${b.getTitle()} | ${b.getAuthor()} | ${b.getYear()} | ${
                   b.isAvailable() ? "Доступна" : "Видана"
                 }`
               )
             );
           break;
+
         case "2":
           system
             .listReaders()
-            .forEach((r) => console.log(`${r.getId()} | ${r.getName()}`));
+            .forEach((r) =>
+              console.log(
+                `${r.getId()} | ${r.getName()} | ${r.getAddress()} | ${r.getContact()}`
+              )
+            );
           break;
+
         case "3":
-          rl.question("ID книги: ", (b) =>
-            rl.question("ID читача: ", (r) => {
-              system.lendBook(+b, +r);
+          rl.question("ID книги: ", (bId) =>
+            rl.question("ID читача: ", (rId) => {
+              try {
+                system.lendBook(+bId, +rId);
+                console.log("✅ Книга видана");
+              } catch (e: any) {
+                console.error("❌", e.message);
+              }
               menu();
             })
           );
+          return;
+
+        case "4":
+          rl.question("ID книги: ", (bId) =>
+            rl.question("ID читача: ", (rId) => {
+              try {
+                system.returnBook(+bId, +rId);
+                console.log("✅ Книга повернена");
+              } catch (e: any) {
+                console.error("❌", e.message);
+              }
+              menu();
+            })
+          );
+          return;
+
+        case "5":
+          rl.question("Назва книги: ", (title) =>
+            rl.question("Автор: ", (author) =>
+              rl.question("Рік видання: ", (year) => {
+                try {
+                  const newId = system.listBooks().length + 1;
+                  system.addBook(new BookImpl(newId, title, author, +year));
+                  console.log("✅ Книга додана");
+                } catch (e: any) {
+                  console.error("❌", e.message);
+                }
+              menu();
+            })
+          ));
           return;
         case "4":
           rl.question("ID книги: ", (b) =>
