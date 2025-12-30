@@ -161,7 +161,7 @@ function menu() {
         return;
 
       default:
-        console.log("❌ Невірний вибір");
+        console.log("❌ Невірний вибір. Спробуйте ще раз.");
     }
 
     menu();
