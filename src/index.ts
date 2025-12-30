@@ -81,7 +81,7 @@ function menu() {
           rl.question("Автор: ", (author) =>
             rl.question("Рік видання: ", (year) => {
               try {
-                const newId = system.listBooks().length + 1;
+                const newId = system.listBooks().length;
                 system.addBook(new BookImpl(newId, title, author, +year));
                 console.log("✅ Книга додана");
               } catch (e: any) {
